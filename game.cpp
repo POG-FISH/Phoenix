@@ -1,7 +1,5 @@
 ﻿#include <iostream>
-#include <conio.h>
 #include "game.h"
-#include <vector>
 
 int main() {
 
@@ -35,4 +33,5 @@ int main() {
 }
 
 //btw menu doesnt work with capslock
-//brotha man
+
+//this change was made on 9-11 like 1:50. Made this change at 2:42

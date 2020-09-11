@@ -101,6 +101,9 @@ void diamond_looped();
 
 void passcode(int passcode);
 
+//ENTER THE GAME
+void entrance();
+
 //Empty
 void hacking_game();
 void setup();
@@ -110,6 +113,3 @@ void dot();
 void hunger();
 void chest();
 void display_inventory();
-
-//ENTER THE GAME
-void entrance();
