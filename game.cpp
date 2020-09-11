@@ -3,7 +3,7 @@
 
 int main() {
 
-	entrance();
+	//entrance();
 
 	bool gameOver = false;
 	menu(gameOver);
@@ -24,13 +24,18 @@ int main() {
 	int i = 0;
 	while (gameOver == false) {
 		system("cls");
-		map1.draw_map(x, y, rand_devil, p1);
-		map1.map_bounds();
+		map1.draw_map(x, y, gameOver, rand_devil, p1);
 		map1.map_controls(x, y);
 		p1.give_playercoords(x, y);
 	}
 
 }
 
-//btw menu doesnt work with capslock
-//0.302
+
+/*
+PhoenixV0.350
+
+changes:
+Logo is more centered
+added basic retreat option
+*/

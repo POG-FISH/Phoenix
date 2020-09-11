@@ -6,7 +6,14 @@
 #include <time.h>
 #include <Windows.h> // adds "Sleep()" function
 
-void entrance() {
+Item::Item() {
+
+}
+Item::~Item() {
+
+}
+
+void entrance() { //See if its possible to show one letter at a time
 	bool select = false;
 	for (int b = 0; b < 50; b++) {
 		system("cls");
@@ -66,78 +73,86 @@ void entrance() {
 	}
 }
 
-void battle(Enemy &i, Player &q) { //The menu system here uses math to move around 
+void battle(bool &infight, Enemy &i, Player &q) { //The menu system here uses math to move around 
 	int option = 0;
 	bool select = false;
 	std::string arrow = "<---";
+	
+
+	while (infight == true) {
+		
+			system("cls");
+			i.display_enemy();
+			std::cout << "\n--<>--<>--<>--<>\n";
+			std::cout << "\nYou are fighting " << i.get_enem_name() << "\n";
+			std::cout << "\nAttack "; //option 0
+			if (option == 0)
+				std::cout << arrow;
+			std::cout << "  Magic "; //option 1
+			if (option == 1)
+				std::cout << arrow;
+			std::cout << "\nItems "; //option 2
+			if (option == 2)
+				std::cout << arrow;
+			std::cout << "  Retreat "; //option 3
+			if (option == 3)
+				std::cout << arrow;
+			std::cout << "\n\n--<>--<>--<>--<>";
 
 
-	while (select == false) {
-		system("cls");
-		i.display_enemy();
-		std::cout << "\n--<>--<>--<>--<>\n";
-		std::cout << "\nYou are fighting " << i.get_enem_name() << "\n";
-		std::cout << "\nAttack "; //option 0
-		if (option == 0)
-			std::cout << arrow;
-		std::cout << "  Magic "; //option 1
-		if (option == 1)
-			std::cout << arrow;
-		std::cout << "\nItems "; //option 2
-		if (option == 2)
-			std::cout << arrow;
-		std::cout << "  Retreat "; //option 3
-		if (option == 3)
-			std::cout << arrow;
-		std::cout << "\n\n--<>--<>--<>--<>";
-
-
-		if (_kbhit()) {
-			switch (_getch())
-			{
-			case 's':
-				if (option == 0 || option == 1) {
-					option = option + 2;
-				}
-				break;
-			case 'w':
-				if (option == 2 || option == 3) {
-					option = option - 2;
-				}
-				break;
-			case 'a':
-				if (option == 1 || option == 3) {
-					option--;
-				}
-				break;
-			case 'd':
-				if (option == 0 || option == 2) {
-					option++;
-				}
-				break;
-			case 'f':
-				select = true;
-				break;
-			default:
-				break;
+			if (option == 0 && select == true) { //Attack
+				std::cout << "\ntest";
+				select = false;
 			}
-		}
+			else if (option == 1 && select == true) { //Magic
+				std::cout << "\ntest";
+				select = false;
+			}
+			else if (option == 2 && select == true) { //Items
+				std::cout << "\ntest";
+				select = false;
+			}
+			else if (option == 3 && select == true) { //Retreat
+				std::cout << "\nMust retreat!!!";
+				infight = false;
+			}
 
 
-		if (option == 0 && select == true) { //This checks to see if the player has selected an option. 
+			if (_kbhit()) {
+				switch (_getch())
+				{
+				case 's':
+					if (option == 0 || option == 1) {
+						option = option + 2;
+					}
+					break;
+				case 'w':
+					if (option == 2 || option == 3) {
+						option = option - 2;
+					}
+					break;
+				case 'a':
+					if (option == 1 || option == 3) {
+						option--;
+					}
+					break;
+				case 'd':
+					if (option == 0 || option == 2) {
+						option++;
+					}
+					break;
+				case 'f':
+					select = true;
+					break;
+				default:
+					break;
+				}
+			}
 
-		}
-		else if (option == 1 && select == true) {
 
-		}
-		else if (option == 2 && select == true) {
-
-
-		}
-		else if (option == 3 && select == true) {
-
-		}
+		
 	}
+	std::cout << "\nEND OF BATTLE";
 }
 
 void health_display(Player player) {
@@ -196,7 +211,8 @@ bool menu(bool &gameOver) {
 	std::string arrow = "<---";
 	while (select == false) {
 		system("cls");
-		std::cout << "\nPROJECT PHOENIX V0.302";
+		std::cout << "\n PhoenixV.350";
+		std::cout << "\n I used ascii text generator for this logo. Specifically 'Small Isometric1'";
 		std::cout << "\n    ___       ___       ___       ___            ___       ___       ___       ___      ";
 		std::cout << "\n   /\\__\\     /\\  \\     /\\  \\     /\\__\\          /\\__\\     /\\  \\     /\\__\\     /\\__\\     ";
 		std::cout << "\n  /::L_L_   /::\\  \\   _\\:\\  \\   /:| _|_        /::L_L_   /::\\  \\   /:| _|_   /:/ _/_    ";
@@ -204,7 +220,6 @@ bool menu(bool &gameOver) {
 		std::cout << "\n \\/_/:/  / \\/\\::/  / \\::/\\/__/ \\/|::/  /      \\/_/:/  / \\:\\:\\/  / \\/|::/  / \\:\\/:/  /   ";
 		std::cout << "\n   /:/  /    /:/  /   \\:\\__\\     |:/  /         /:/  /   \\:\\/  /    |:/  /   \\::/  /    ";
 		std::cout << "\n   \\/__/     \\/__/     \\/__/     \\/__/          \\/__/     \\/__/     \\/__/     \\/__/     ";
-		std::cout << "\n I used ascii text generator for this logo. Specifically 'Small Isometric1'";
 		
 		std::cout << "\n\n--<>--<>--<>--<>--<>\n";
 		std::cout << "\nPlay ";
@@ -449,7 +464,7 @@ while (select == false) {
 	std::cout << "\n             \\/__/     \\/__/     \\/__/     \\/__/     \\/__/  ";
 
 	std::cout << "\n--<>--<>--<>--<>--<>--<>--<>--<>\n";
-	std::cout << "\nItems ";
+	std::cout << "\nInventory ";
 	if (option == 0)
 		std::cout << arrow;
 	std::cout << "\nSettings ";
@@ -490,15 +505,16 @@ while (select == false) {
 	if (select == true) {
 		if (option == 0) { //Items
 			std::cout << "\n";
-
+			display_inventory();
 		}
-		if (option == 1) { //Setting
+		else if (option == 1) { //Setting
+			std::cout << "\n";
+			menu_settings();
+		}
+		else if (option == 2) { //Continue playing
 			std::cout << "\n";
 		}
-		if (option == 2) { //Continue playing
-			std::cout << "\n";
-		}
-		if (option == 3) {// Return to menu
+		else if (option == 3) {// Return to menu
 			std::cout << "\n";
 			bool i = false;
 			menu(i);
@@ -689,5 +705,47 @@ void chest() {
 }
 
 void display_inventory() {
+	int option = 0;
+	bool select = false;
+	std::string arrow = "<---";
+	while (select == false) {
+		system("cls");
+		std::cout << "\n--<>--<>--<>--<>";
+		std::cout << "\n\nInventory\n";
+		std::cout << "\nControls ";
+		if (option == 0)
+			std::cout << arrow;
+		std::cout << "\nGo Back ";
+		if (option == 1)
+			std::cout << arrow;
+		std::cout << "\n\n--<>--<>--<>--<>";
 
+
+		if (_kbhit()) {
+			switch (_getch())
+			{
+			case 's':
+				if (option == 0) {
+					option++;
+				}
+				break;
+			case 'w':
+				if (option > 0) {
+					option--;
+				}
+				break;
+			case 'f':
+				select = true;
+				break;
+			default:
+				break;
+			}
+		}
+	}
+	if (option == 0 && select == true)
+		menu_controls();
+	if (option == 1 && select == true) {
+		bool i = false;
+		menu(i);
+	}
 }

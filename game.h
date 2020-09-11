@@ -1,11 +1,11 @@
 #pragma once
 
-
 class Player {
 private:
 
 	std::string pname;
 	int phealth, pstrength, pspeed, px, py;
+
 
 public:
 
@@ -56,6 +56,20 @@ public:
 	int get_enem_strength();
 };
 
+class Item
+{
+private:
+
+	std::string item_name;
+	int item_quantity, item_level, item_rarity;
+
+
+public:
+	Item();
+	~Item();
+
+};
+
 class Map
 {
 private:
@@ -65,13 +79,13 @@ private:
 public:
 
 	void create_map(int new_WIDTH, int new_HEIGHT);
-	void draw_map(int& x, int& y, Enemy& a, Player& q);
-	void map_bounds();
+	void draw_map(int& x, int& y, bool &gameOver, Enemy& a, Player& q);
+	void map_bounds(); //useless, code is already in draw_map
 	void map_controls(int& x, int& y);
 
 };
 
-void battle(Enemy &i, Player &q);
+void battle(bool &infight, Enemy &i, Player &q);
 
 bool menu(bool &gameOver);
 	void menu_settings();

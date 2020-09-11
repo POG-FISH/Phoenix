@@ -12,11 +12,12 @@ void Map::create_map(int new_WIDTH, int new_HEIGHT) {
 	mapHEIGHT = new_HEIGHT;
 }
 
-void Map::draw_map(int& x, int& y, Enemy& a, Player& q) { //80,20 for coords is a good map size
+void Map::draw_map(int& x, int& y, bool &gameOver, Enemy& a, Player& q) { //80,20 for coords is a good map size
 
 	int const WIDTH = mapWIDTH; //map x
 	int const HEIGHT = mapHEIGHT; //map y
 	int ex = a.get_enemy_x_coord(), ey = a.get_enemy_y_coord();
+	bool infight = false;
 
 	if (x > WIDTH - 2) { //This chain of if and for statements is to keep the player from going outside the map
 		for (int i = 0; x > WIDTH - 2; i++) {
@@ -72,7 +73,7 @@ void Map::draw_map(int& x, int& y, Enemy& a, Player& q) { //80,20 for coords is 
 				std::cout << "E";
 			}
 			else if (x == ex && y == ey || x - 1 == ex && y == ey || x + 1 == ex && y == ey || x == ex && y - 1 == ey || x == ex && y + 1 == ey) {
-				battle(a, q);
+				infight = true;
 			}
 			else {
 				std::cout << " ";
@@ -84,7 +85,8 @@ void Map::draw_map(int& x, int& y, Enemy& a, Player& q) { //80,20 for coords is 
 	std::cout << "X: " << x << " Y: " << y;
 
 	srand(time(NULL));
-	int turn = rand() % 3;
+	int turn = rand() % 2;
+	//int turn = 1;
 	std::cout << " Turn: " << turn;
 
 	if (turn == 1) {
@@ -127,6 +129,26 @@ void Map::draw_map(int& x, int& y, Enemy& a, Player& q) { //80,20 for coords is 
 		if (q == 3) { ey++; }
 		a.give_enemycoords(ex, ey); //Sets the changed coords to the enemy. If not here the enemy wont move
 	}
+	if(infight == true) {
+		battle(infight, a, q);
+		if (infight == false && gameOver == false)
+		{
+			if (x == ex && y == ey || x - 1 == ex && y == ey || x + 1 == ex && y == ey || x == ex && y - 1 == ey || x == ex && y + 1 == ey) { //This attempts to make the enemy run away after retreating
+				for (int i = 0; i < 5; i++) {
+					ex--;
+					ey--;
+				}
+			}
+			a.give_enemycoords(ex, ey); //Sets the changed coords to the enemy. If not here the enemy wont move
+			system("cls");
+			Map::draw_map(x, y, gameOver, a, q);
+		}
+		else if (infight == false && gameOver == true) {
+			std::cout << "\nGAME OVER!!";
+		}
+
+	}
+	
 }
 
 void Map::map_bounds() {
