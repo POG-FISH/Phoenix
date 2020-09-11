@@ -35,3 +35,4 @@ int main() {
 }
 
 //btw menu doesnt work with capslock
+//brotha man
