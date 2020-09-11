@@ -33,5 +33,4 @@ int main() {
 }
 
 //btw menu doesnt work with capslock
-
-//this change was made on 9-11 like 1:50. Made this change at 2:42
+//0.302

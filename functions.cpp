@@ -196,7 +196,7 @@ bool menu(bool &gameOver) {
 	std::string arrow = "<---";
 	while (select == false) {
 		system("cls");
-		std::cout << "\nPROJECT PHOENIX V0.4";
+		std::cout << "\nPROJECT PHOENIX V0.302";
 		std::cout << "\n    ___       ___       ___       ___            ___       ___       ___       ___      ";
 		std::cout << "\n   /\\__\\     /\\  \\     /\\  \\     /\\__\\          /\\__\\     /\\  \\     /\\__\\     /\\__\\     ";
 		std::cout << "\n  /::L_L_   /::\\  \\   _\\:\\  \\   /:| _|_        /::L_L_   /::\\  \\   /:| _|_   /:/ _/_    ";
