@@ -80,6 +80,7 @@ public:
 
 	void create_map(int new_WIDTH, int new_HEIGHT);
 	void draw_map(int& x, int& y, bool &gameOver, Enemy& a, Player& q);
+	void draw_randmap(int& x, int& y, bool& gameOver, Player& q, int enemy_quantity);
 	void map_bounds(); //useless, code is already in draw_map
 	void map_controls(int& x, int& y);
 
