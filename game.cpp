@@ -45,4 +45,25 @@ Logo is more centered
 added basic retreat option
 adding a random map generator
 
+
+Should work on:
+
+Inventory
+Combat
+Randomized items
+Rarities to items with colored text
+make changes to how map looks. Maybe try to make a circle map. 
+Add more flaire to the entrance function
+Add interactable npcs
+Add allies to aid in combat. They dont have to be complex, could just be extra damage each turn or something
+STRETCH: Add local multiplayer functionality. Altough I doubt you should even attempt this
+Add small mini games (password minigame/ hacking mini game)
+Make the game look prettier
+Add more names for more uniquness among the enemies
+Give the player a look. Maybe add very small custimization to that look
+See if you can add visual things like the ringloop() into the map screen just for something to look at. Could require a system("cls") constantly instead of when just moving
+
+And number one of all, if I get sick of making this I should stop and not force myself
+
+
 */

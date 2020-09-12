@@ -156,7 +156,9 @@ void Map::draw_randmap(int& x, int& y, bool& gameOver, Player& q, int enemy_quan
 	int const HEIGHT = mapHEIGHT; //map y
 	int num = enemy_quantity;
 
-	std::vector<Enemy> h(num);
+
+	// Should prob make this its own function because its going to generate new enemies for each frame. That means enemies will theoretically change everytime you move
+	std::vector<Enemy> h(num); 
 	for (int i = 0; i < enemy_quantity; i++) {
 		h[i].new_randenemy(50, 50);
 		//std::cout << "\ncreating: " << h[i].get_enem_name();
