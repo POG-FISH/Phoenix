@@ -211,7 +211,7 @@ bool menu(bool &gameOver) {
 	std::string arrow = "<---";
 	while (select == false) {
 		system("cls");
-		std::cout << "\n PhoenixV.350";
+		std::cout << "\n PhoenixV.320";
 		std::cout << "\n I used ascii text generator for this logo. Specifically 'Small Isometric1'";
 		std::cout << "\n    ___       ___       ___       ___            ___       ___       ___       ___      ";
 		std::cout << "\n   /\\__\\     /\\  \\     /\\  \\     /\\__\\          /\\__\\     /\\  \\     /\\__\\     /\\__\\     ";
