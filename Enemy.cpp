@@ -42,7 +42,7 @@ void Enemy::get_enem_info() {
 }
 
 void Enemy::new_randenemy(int min, int max) {
-	std::vector<std::string> first_name = { "Dru'", "Val'", "Xivu'", "Ur'", "La'", "Vau'", "Kui'", "Yuru'", "Shura'", "Xira'" };
+	std::vector<std::string> first_name = { "Dru'", "Val'", "Xivu'", "Ur'", "La'", "Vau'", "Kui'", "Yuru'", "Shura'", "Xira'", "Shivu'" };
 	std::vector<std::string> last_name = { "Olack", "Irath", "Thura", "Xuntu", "Esdu", "Rathu", "Ouxi", "Xithu", "Kilath", "Vunxi" };
 	std::vector<std::string> prefix = { ", the weak", ", the mighty", ", the durable", ", the honorable", ", the heavy", ", the nimble" };
 	int f = rand() % first_name.size();

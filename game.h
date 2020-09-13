@@ -22,6 +22,8 @@ public:
 
 };
 
+
+
 class Ally {
 private:
 
@@ -33,6 +35,8 @@ public:
 
 
 };
+
+
 
 class Enemy {
 private:
@@ -56,6 +60,8 @@ public:
 	int get_enem_strength();
 };
 
+
+
 class Item
 {
 private:
@@ -70,33 +76,41 @@ public:
 
 };
 
+
+
 class Map
 {
 private:
 
-	int mapHEIGHT, mapWIDTH;
+	int mapHEIGHT, mapWIDTH, mapEnemy_quantity;
 
 public:
 
 	void create_map(int new_WIDTH, int new_HEIGHT);
 	void draw_map(int& x, int& y, bool &gameOver, Enemy& a, Player& q);
-	void draw_randmap(int& x, int& y, bool& gameOver, Player& q, int enemy_quantity);
+	void fill_randmap(int enemy_quantity);
+	void draw_randmap(int& x, int& y, Player& q, int enemy_quantity);
 	void map_bounds(); //useless, code is already in draw_map
-	void map_controls(int& x, int& y);
+	void map_controls(int& x, int& y, bool& gameOver);
 
 };
 
-void battle(bool &infight, Enemy &i, Player &q);
+
+
+void battle(bool &infight, bool& gameOver, Enemy &i, Player &q);
 
 bool menu(bool &gameOver);
-	void menu_settings();
-	void menu_about();
-	void menu_controls();
-	void menu_extra();
-void menu_paused();
+	void menu_settings(bool& gameOver);
+	void menu_color();
+	void menu_about(bool& gameOver);
+	void menu_controls(bool& gameOver);
+	void menu_extra(bool& gameOver);
+	void menu_seizure(bool& gameOver);
+bool menu_paused(bool &gameOver);
 
 //Displays
 void health_display(Player player);
+void display_inventory(bool& gameOver);
 
 void display_gamelogo();
 void display_monster1();
@@ -127,4 +141,3 @@ void end_game();
 void dot();
 void hunger();
 void chest();
-void display_inventory();

@@ -130,7 +130,7 @@ void Map::draw_map(int& x, int& y, bool &gameOver, Enemy& a, Player& q) { //80,2
 		a.give_enemycoords(ex, ey); //Sets the changed coords to the enemy. If not here the enemy wont move
 	}
 	if(infight == true) {
-		battle(infight, a, q);
+		battle(infight, gameOver, a, q);
 		if (infight == false && gameOver == false)
 		{
 			if (x == ex && y == ey || x - 1 == ex && y == ey || x + 1 == ex && y == ey || x == ex && y - 1 == ey || x == ex && y + 1 == ey) { //This attempts to make the enemy run away after retreating
@@ -151,18 +151,23 @@ void Map::draw_map(int& x, int& y, bool &gameOver, Enemy& a, Player& q) { //80,2
 	
 }
 
-void Map::draw_randmap(int& x, int& y, bool& gameOver, Player& q, int enemy_quantity) {
-	int const WIDTH = mapWIDTH; //map x
-	int const HEIGHT = mapHEIGHT; //map y
+void Map::fill_randmap(int enemy_quantity) {
+	
 	int num = enemy_quantity;
-
-
-	// Should prob make this its own function because its going to generate new enemies for each frame. That means enemies will theoretically change everytime you move
 	std::vector<Enemy> h(num); 
 	for (int i = 0; i < enemy_quantity; i++) {
 		h[i].new_randenemy(50, 50);
-		//std::cout << "\ncreating: " << h[i].get_enem_name();
+		h[i].give_enemycoords(rand() % mapWIDTH, rand() % mapHEIGHT);
+		std::cout << "\ncreating: " << h[i].get_enem_name() << "'s X: " << h[i].get_enemy_x_coord() << " Y: " << h[i].get_enemy_y_coord() << "\n";
 	}
+}
+
+void Map::draw_randmap(int& x, int& y, Player& q, int enemy_quantity) {
+	int const WIDTH = mapWIDTH; //map x
+	int const HEIGHT = mapHEIGHT; //map y
+
+
+
 
 	bool infight = false;
 
@@ -209,7 +214,7 @@ void Map::map_bounds() {
 
 }
 
-void Map::map_controls(int& x, int& y) { //Allows control of map and changes player x and y respectively
+void Map::map_controls(int& x, int& y, bool& gameOver) { //Allows control of map and changes player x and y respectively
 	if (_kbhit) {
 		switch (_getch())
 		{
@@ -226,7 +231,8 @@ void Map::map_controls(int& x, int& y) { //Allows control of map and changes pla
 			x++;
 			break;
 		case 'p':
-			menu_paused();
+			menu_paused(gameOver);
+
 			break;
 		default:
 			break;

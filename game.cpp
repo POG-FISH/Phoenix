@@ -1,12 +1,16 @@
 ﻿#include <iostream>
 #include "game.h"
 #include <time.h>
+#include <conio.h>
+#include <Windows.h>
 
 int main() {
 	srand(time(NULL)); //makes functions(especially randenemy constructor) truly random
 	//entrance();
 
+	//passcode(1946);
 
+	bool quit = false;
 	bool gameOver = false;
 	menu(gameOver);
 
@@ -21,33 +25,51 @@ int main() {
 	rand_devil.give_enemycoords(15, 15);
 	
 	Map map1, randmap1;
-	map1.create_map(110, 35);
+
+	map1.create_map(80, 30);
+
 	randmap1.create_map(80, 30);
+	randmap1.fill_randmap(3);
 
 
-	int i = 0;
-	while (gameOver == false) {
-		system("cls");
-		//map1.draw_map(x, y, gameOver, rand_devil, p1);
-		randmap1.draw_randmap(x, y, gameOver, p1, 3);
-		randmap1.map_controls(x, y);
-		p1.give_playercoords(x, y);
-	}
+	int choice;
+		std::cout << "\nmap(1) or randmap(else): ";
+		std::cin >> choice;
+		if (choice == 1) {
+			while (gameOver == false) { //set map
+				system("cls");
+				map1.draw_map(x, y, gameOver, rand_devil, p1);
+				map1.map_controls(x, y, gameOver);
+				p1.give_playercoords(x, y);
+			}
+		}
+		else { //random map
+			while (gameOver == false) {
+				system("cls");
+				randmap1.draw_randmap(x, y, p1, 3);
+				randmap1.map_controls(x, y, gameOver);
+				p1.give_playercoords(x, y);
 
+			}
+		}
+
+		std::cout << "\nGoodbye!\n";
 }
 
 
 /*
-PhoenixV0.320
+PhoenixV0.350
 
 changes:
-Logo is more centered
-added basic retreat option
-adding a random map generator
+Added a option to color the screen
+Minor changes such as being able to spam down or up in the menu
+Made passcode() work.
+Added seizure
 
 
 Should work on:
 
+Random map
 Inventory
 Combat
 Randomized items

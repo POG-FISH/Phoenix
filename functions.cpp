@@ -5,6 +5,7 @@
 #include <cmath>
 #include <time.h>
 #include <Windows.h> // adds "Sleep()" function
+#include <string>
 
 Item::Item() {
 
@@ -73,7 +74,7 @@ void entrance() { //See if its possible to show one letter at a time
 	}
 }
 
-void battle(bool &infight, Enemy &i, Player &q) { //The menu system here uses math to move around 
+void battle(bool &infight, bool& gameOver, Enemy &i, Player &q) { //The menu system here uses math to move around 
 	int option = 0;
 	bool select = false;
 	std::string arrow = "<---";
@@ -238,18 +239,25 @@ bool menu(bool &gameOver) {
 		if (option == 4)
 			std::cout << arrow;
 		std::cout << "\n\n--<>--<>--<>--<>--<>";
+		std::cout << "\nOPTION: " << option;
 
 		if (_kbhit()) {
 			switch (_getch())
 			{
 			case 's':
-				if (option == 0 || option < 4) {
+				if (option < 4) {
 					option++;
+				}
+				else if (option == 4) {
+					option = option - 4;
 				}
 				break;
 			case 'w':
 				if (option > 0) {
 					option--;
+				}
+				else if (option == 0) {
+					option = option + 4;
 				}
 				break;
 			case 'f':
@@ -267,15 +275,15 @@ bool menu(bool &gameOver) {
 		break;
 	case 1:
 		//Settings
-		menu_settings();
+		menu_settings(gameOver);
 		break;
 	case 2:
 		//About/Help
-		menu_about();
+		menu_about(gameOver);
 		break;
 	case 3:
 		//Extras
-		menu_extra();
+		menu_extra(gameOver);
 	case 4:
 		//Quit game
 		return gameOver = true;
@@ -285,10 +293,11 @@ bool menu(bool &gameOver) {
 	}
 }
 
-void menu_settings() {
+void menu_settings(bool& gameOver) {
 	int option = 0;
 	bool select = false;
 	std::string arrow = "<---";
+	std::string output;
 	while (select == false) {
 		system("cls");
 			std::cout << "\n    ___       ___       ___       ___       ___       ___       ___       ___   ";
@@ -303,23 +312,33 @@ void menu_settings() {
 		std::cout << "\nControls ";
 		if (option == 0)
 			std::cout << arrow;
-		std::cout << "\nGo Back ";
+		std::cout << "\nChange Color ";
 		if (option == 1)
 			std::cout << arrow;
+		std::cout << "\nGo Back ";
+		if (option == 2)
+			std::cout << arrow;
 		std::cout << "\n\n--<>--<>--<>--<>";
+		std::cout << "\nOPTION: "<< option << "\n";
 
 
 		if (_kbhit()) {
 			switch (_getch())
 			{
 			case 's':
-				if (option == 0) {
+				if (option == 0 || option < 2) {
 					option++;
+				}
+				else if (option == 2) {
+					option = option - 2;
 				}
 				break;
 			case 'w':
 				if (option > 0) {
 					option--;
+				}
+				else if (option == 0) {
+					option = option + 2;
 				}
 				break;
 			case 'f':
@@ -330,16 +349,53 @@ void menu_settings() {
 			}
 		}
 	}
-	if (option == 0 && select == true)
-		menu_controls();
-	if (option == 1 && select == true) {
-	bool i = false;
-	menu(i);
+	if (select == true) {
+		switch (option)
+		{
+		case 0:
+			menu_controls(gameOver);
+			break;
+		case 1:
+			menu_color();
+			break;
+		case 2:
+			menu(gameOver);
+			break;
+		default:
+			break;
+		}
 	}
 
 }
 
-void menu_about() {
+void menu_color() {
+	int repeat = 1;
+	char yn;
+	while (repeat == 1) {
+		std::string output = "color ";
+		char color1, color2;
+		system("cls");
+		system("color %");
+		std::cout << "\nNow type in the color combo you would like to choose: ";
+		std::cin >> color1;
+		std::cout << color1;
+		std::cin >> color2;
+		output = "color ";
+		output = output += color1;
+		output = output += color2;
+		std::cout << output << "\n";
+		system(output.c_str());
+		std::cout << "\nVoila! Are you happy with this color? (y or n): ";
+		std::cin >> yn;
+		if (yn == 'n')
+			repeat = 1;
+		else if (yn == 'y')
+			repeat = 0;
+		
+	}
+}
+
+void menu_about(bool& gameOver) {
 	int option = 0;
 	bool select = false;
 	std::string arrow = "<---";
@@ -401,7 +457,7 @@ void menu_about() {
 	menu(i);
 }
 
-void menu_controls() {
+void menu_controls(bool& gameOver) {
 	int option = 0;
 	bool select = false;
 	std::string arrow = "<---";
@@ -444,10 +500,10 @@ void menu_controls() {
 		}
 	}
 	bool i = false;
-	menu_settings();
+	menu_settings(gameOver);
 }
 
-void menu_paused() {
+bool menu_paused(bool &gameOver) {
 
 int option = 0;
 bool select = false;
@@ -467,17 +523,14 @@ while (select == false) {
 	std::cout << "\nInventory ";
 	if (option == 0)
 		std::cout << arrow;
-	std::cout << "\nSettings ";
+	std::cout << "\nContinue playing";
 	if (option == 1)
 		std::cout << arrow;
-	std::cout << "\nContinue playing";
+	std::cout << "\nReturn to main menu";
 	if (option == 2)
 		std::cout << arrow;
-	std::cout << "\nReturn to main menu";
-	if (option == 3)
-		std::cout << arrow;
 	std::cout << "\nQuit game";
-	if (option == 4)
+	if (option == 3)
 		std::cout << arrow;
 	std::cout << "\n\n--<>--<>--<>--<>--<>--<>--<>\n";
 
@@ -485,13 +538,19 @@ while (select == false) {
 		switch (_getch())
 		{
 		case 's':
-			if (option == 0 || option < 4) {
+			if (option == 0 || option < 3) {
 				option++;
+			}
+			else if (option == 3) {
+				option = option - 3;
 			}
 			break;
 		case 'w':
-			if (option > 0 || option == 4) {
+			if (option > 0) {
 				option--;
+			}
+			else if (option == 0) {
+				option = option + 3;
 			}
 			break;
 		case 'f':
@@ -503,33 +562,27 @@ while (select == false) {
 	}
 
 	if (select == true) {
-		if (option == 0) { //Items
+		if (option == 0) { //Inventory
 			std::cout << "\n";
-			display_inventory();
+			display_inventory(gameOver);
 		}
-		else if (option == 1) { //Setting
-			std::cout << "\n";
-			menu_settings();
-		}
-		else if (option == 2) { //Continue playing
+		else if (option == 1) { //Continue playing
 			std::cout << "\n";
 		}
-		else if (option == 3) {// Return to menu
+		else if (option == 2) { //Return to main menu
 			std::cout << "\n";
-			bool i = false;
-			menu(i);
-
+			menu(gameOver);
 		}
-		if (option == 4) { //Quit game
+		if (option == 3) { //Quit game
 			std::cout << "\n";
-
+			return gameOver = true;
 		}
 	}
 }
 
 }
 
-void menu_extra() {
+void menu_extra(bool& gameOver) {
 		int option = 0;
 		bool select = false;
 		std::string arrow = "<---";
@@ -544,11 +597,14 @@ void menu_extra() {
 			std::cout << "\n   \\/__/     \\/__/               \\|__|     \\/__/ ";
 			std::cout << "\n--<>--<>--<>--<>";
 			std::cout << "\n\nWelcome to the extras section.\n";
-			std::cout << "\nRandom loop I made  ";
+			std::cout << "\nRandom loop I made ";
 			if (option == 0)
 				std::cout << arrow;
-			std::cout << "\nGo Back ";
+			std::cout << "\nINSTANT SEIZURE ";
 			if (option == 1)
+				std::cout << arrow;
+			std::cout << "\nGo Back ";
+			if (option == 2)
 				std::cout << arrow;
 			std::cout << "\n\n--<>--<>--<>--<>";
 
@@ -557,13 +613,19 @@ void menu_extra() {
 				switch (_getch())
 				{
 				case 's':
-					if (option == 0) {
+					if (option < 2) {
 						option++;
+					}
+					else if (option == 2) {
+						option = option - 2;
 					}
 					break;
 				case 'w':
 					if (option > 0) {
 						option--;
+					}
+					else if (option == 0) {
+						option = option + 2;
 					}
 					break;
 				case 'f':
@@ -572,16 +634,174 @@ void menu_extra() {
 				default:
 					break;
 				}
+				 
 			}
 		}
 		if (option == 0 && select == true)
 			ringspin_looped();
-		if (option == 1 && select == true) {
+		else if (option == 1 && select == true) {
+			menu_seizure(gameOver);
+		}
+		else if (option == 2 && select == true) {
 			bool i = false;
 			menu(i);
 		}
 }
 
+void menu_seizure(bool& gameOver) {
+	int in1, in2;
+	char color1 = '0', color2 = 'f';
+	/*0-9 and A-f. 16 unique inputs*/
+	gameOver = false;
+
+	for (int i = 0; i < 100; i++) {
+
+		std::string output = "color ";
+		in1 = rand() % 16;
+		in2 = rand() % 16;
+
+		switch (in1)
+		{
+		case 0:
+			in1 = '0';
+			break;
+		case 1:
+			in1 = '1';
+			break;
+		case 2:
+			in1 = '2';
+			break;
+		case 3:
+			in1 = '3';
+			break;
+		case 4:
+			in1 = '4';
+			break;
+		case 5:
+			in1 = '5';
+			break;
+		case 6:
+			in1 = '6';
+			break;
+		case 7:
+			in1 = '7';
+			break;
+		case 8:
+			in1 = '8';
+			break;
+		case 9:
+			in1 = '9';
+			break;
+		case 10:
+			in1 = 'a';
+			break;
+		case 11:
+			in1 = 'b';
+			break;
+		case 12:
+			in1 = 'c';
+			break;
+		case 13:
+			in1 = 'd';
+			break;
+		case 14:
+			in1 = 'e';
+			break;
+		case 15:
+			in1 = 'f';
+			break;
+		default:
+			break;
+		}
+
+		switch (in2)
+		{
+		case 0:
+			in2 = '0';
+			break;
+		case 1:
+			in2 = '1';
+			break;
+		case 2:
+			in2 = '2';
+			break;
+		case 3:
+			in2 = '3';
+			break;
+		case 4:
+			in2 = '4';
+			break;
+		case 5:
+			in2 = '5';
+			break;
+		case 6:
+			in2 = '6';
+			break;
+		case 7:
+			in2 = '7';
+			break;
+		case 8:
+			in2 = '8';
+			break;
+		case 9:
+			in2 = '9';
+			break;
+		case 10:
+			in2 = 'a';
+			break;
+		case 11:
+			in2 = 'b';
+			break;
+		case 12:
+			in2 = 'c';
+			break;
+		case 13:
+			in2 = 'd';
+			break;
+		case 14:
+			in2 = 'e';
+			break;
+		case 15:
+			in2 = 'f';
+			break;
+		default:
+			break;
+		}
+	color1 = in1;
+	color2 = in2;
+	output = output += color1;
+	output = output += color2;
+	std::cout << "\n\n\n\n\n\n\n\n\n\n" << color1 << "\n" << color2 << "\n" << in1 << "\n" << in2 << "\n" << output << "\n\n\n\n\n\n";
+	system(output.c_str());
+	}
+	
+	system("color 0f");
+	system("cls");
+	std::cout << "\nI hope you enjoyed! :)";
+	std::cout << "\nEnter anything to go back to main menu.\n";
+
+	std::string anything;
+	std::cin >> anything;
+	if (anything == "anything") {
+		std::cout << "\nSo you wanna be a smartass huh? Just because of that you have to type something else again.\n";
+		std::cin >> anything;
+		if (anything == "anything") {
+			std::cout << "\nIf you type that again im gonna do something you're not gonna like.\n";
+			std::cin >> anything;
+			if (anything == "anything") {
+				std::cout << "\nI'm warning ya.\n";
+				std::cin >> anything;
+				if (anything == "anything") {
+					menu_seizure(gameOver);
+				}
+			}
+		}
+	}
+	else {
+		menu(gameOver);
+	}
+
+}
 void hacking_game() {
 
 }
@@ -608,13 +828,34 @@ void hunger() {
 
 void passcode(int passcode) {
 	
-	int i = 0;
+
+	int useless = 1;
+	int i = 0; //Purpose of this int is to clear numpad of the #Numhere# pound keys. 
 	std::vector<char> hit = {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
 	int answer = NULL;
+	int digits = int(log10(passcode) + 1);
+	int test = digits - 1;
+
+	//This gets the bases. So if we have a 4 digit passcode, bases(0) == 1, bases(1) == 10, bases(2) == 100, and bases(3) == 1000,
+	std::vector<int> bases(digits);
+	for (int i = 0; i < digits; i++) {
+		bases[i] = pow(10, i);
+	}
+
+	//This gets the max number that can be put in
+	int max = 9;
+	for (int i = 1; i < digits; i++) {
+	 	max = max + 9*bases[i];
+	}	
+		
 	int attempts = 0;
-	while (passcode != answer && attempts < 5) {
+	while (passcode != answer) {
+		//This Numpad is the one drawn most of the time
 		system("cls");
-		std::cout << answer;
+		std::cout << "Digits: " << digits << " Answer: " << answer << " Attempts: " << attempts << " Num: " << test << " Max: " << max;
+		for (int i = 0; i < digits; i++) {
+			std::cout << " Base[" << i << "] = " << bases[i];
+		}
 		std::cout << "\n  _________________ ";
 		std::cout << "\n |     |     |     |";
 		std::cout << "\n | "<< hit[0] << "1" << hit[0] << " | " << hit[1] << "2" << hit[1] << " | " << hit[2] << "3" << hit[2] << " |";
@@ -627,11 +868,18 @@ void passcode(int passcode) {
 		std::cout << "\n |_____|_____|_____|";
 		hit[i] = ' ';
 		system("cls");
-		if (answer > 9999) {
+		
+		if (answer > max) {
 			answer = 0;
-			"Hm, that answer seems too big...";
+			test = digits - 1;
+			std::cout << "That number seems to big. Let me try again.\n";
 		}
-		std::cout << answer;
+
+		//This Numpad is drawn only when the player inputs a number and will then draw the single frame of the visual effect
+		std::cout << "Digits: " << digits << " Answer: " << answer << " Attempts: " << attempts << " Num: " << test << " Max: " << max;
+		for (int i = 0; i < digits; i++) {
+			std::cout << " Base[" << i << "] = " << bases[i];
+		}
 		std::cout << "\n  _________________ ";
 		std::cout << "\n |     |     |     |";
 		std::cout << "\n | " << hit[0] << "1" << hit[0] << " | " << hit[1] << "2" << hit[1] << " | " << hit[2] << "3" << hit[2] << " |";
@@ -649,62 +897,82 @@ void passcode(int passcode) {
 			case '1':
 				i = 0;
 				hit[0] = '#';
-				answer += 1;
+				answer = answer + 1*bases[test];
 				break;
 			case '2':
 				i = 1;
 				hit[1] = '#';
-				answer += 2;
+				answer = answer + 2 * bases[test];
 				break;
 			case '3':
 				i = 2;
 				hit[2] = '#';
-				answer += 3;
+				answer = answer + 3 * bases[test];
 				break;
 			case '4':
 				i = 3;
 				hit[3] = '#';
-				answer += 4;
+				answer = answer + 4 * bases[test];
 				break;
 			case '5':
 				i = 4;
 				hit[4] = '#';
-				answer += 5;
+				answer = answer + 5 * bases[test];
 				break;
 			case '6':
 				i = 5;
 				hit[5] = '#';
-				answer += 6;
+				answer = answer + 6 * bases[test];
 				break;
 			case '7':
 				i = 6;
 				hit[6] = '#';
-				answer += 7;
+				answer = answer + 7 * bases[test];
 				break;
 			case '8':
 				i = 7;
 				hit[7] = '#';
-				answer += 8;
+				answer = answer + 8 * bases[test];
 				break;
 			case '9':
 				i = 8;
 				hit[8] = '#';
-				answer += 9;
+				answer = answer + 9 * bases[test];
 				break;
+			case 'f':
+				answer = 0000;
+				test = 4;
 			default:
 				break;
 			}
 		}
 		attempts++;
+		test--;
+		if (test < 0) {
+			test = test + digits;
+		}
+
+		else if (std::to_string(answer).length() == 0) {
+			test = 3;
+			answer = NULL;
+		}
+		else if (attempts >= 5) {
+			test = 3;
+			answer = 0;
+			attempts = 1;
+		}
 	}
-	std::cout << "\nDammit, im locked out. Gonna have to try again later.";
+	if (passcode != answer)
+		std::cout << "\nDammit, im locked out. Gonna have to try again later.";
+	else if (passcode == answer)
+		std::cout << "\nYes! I got it right!";
 }
 
 void chest() {
 
 }
 
-void display_inventory() {
+void display_inventory(bool& gameOver) {
 	int option = 0;
 	bool select = false;
 	std::string arrow = "<---";
@@ -712,7 +980,7 @@ void display_inventory() {
 		system("cls");
 		std::cout << "\n--<>--<>--<>--<>";
 		std::cout << "\n\nInventory\n";
-		std::cout << "\nControls ";
+		std::cout << "\nFeature in development ";
 		if (option == 0)
 			std::cout << arrow;
 		std::cout << "\nGo Back ";
@@ -743,9 +1011,8 @@ void display_inventory() {
 		}
 	}
 	if (option == 0 && select == true)
-		menu_controls();
+		std::cout << "\ndidnt you see that its still in development? Are you blind?";
 	if (option == 1 && select == true) {
-		bool i = false;
-		menu(i);
+		menu_paused(gameOver);
 	}
 }
