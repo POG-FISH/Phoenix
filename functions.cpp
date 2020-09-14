@@ -7,71 +7,66 @@
 #include <Windows.h> // adds "Sleep()" function
 #include <string>
 
-Item::Item() {
+void randcolor() {
+	int in1, in2;
+	char color1 = '0', color2 = 'f';
+	/*0-9 and A-f. 16 unique inputs*/
+	bool gameOver = false;
 
-}
-Item::~Item() {
+	
 
-}
+		std::string output = "color ";
+		in1 = rand() % 16;
+		in2 = rand() % 7+1; //The +1 just skips the light blue since I dont like the look of it
 
-void entrance() { //See if its possible to show one letter at a time
-	bool select = false;
-	for (int b = 0; b < 50; b++) {
-		system("cls");
-		std::cout << "\n      ___           ___           ___       ___           ___           ___           ___                    ___           ___     ";
-		std::cout << "\n     /\\__\\         /\\  \\         /\\__\\     /\\  \\         /\\  \\         /\\__\\         /\\  \\                  /\\  \\         /\\  \\    ";
-		std::cout << "\n    /:/ _/_       /::\\  \\       /:/  /    /::\\  \\       /::\\  \\       /::|  |       /::\\  \\                 \\:\\  \\       /::\\  \\   ";
-		std::cout << "\n   /:/ /\\__\\     /:/\\:\\  \\     /:/  /    /:/\\:\\  \\     /:/\\:\\  \\     /:|:|  |      /:/\\:\\  \\                 \\:\\  \\     /:/\\:\\  \\  ";
-		std::cout << "\n  /:/ /:/ _/_   /::\\~\\:\\  \\   /:/  /    /:/  \\:\\  \\   /:/  \\:\\  \\   /:/|:|__|__   /::\\~\\:\\  \\                /::\\  \\   /:/  \\:\\  \\ ";
-		std::cout << "\n /:/_/:/ /\\__\\ /:/\\:\\ \\:\\__\\ /:/__/    /:/__/ \\:\\__\\ /:/__/ \\:\\__\\ /:/ |::::\\__\\ /:/\\:\\ \\:\\__\\              /:/\\:\\__\\ /:/__/ \\:\\__\\";
-		std::cout << "\n \\:\\/:/ /:/  / \\:\\~\\:\\ \\/__/ \\:\\  \\    \\:\\  \\  \\/__/ \\:\\  \\ /:/  / \\/__/~~/:/  / \\:\\~\\:\\ \\/__/             /:/  \\/__/ \\:\\  \\ /:/  /";
-		std::cout << "\n  \\::/_/:/  /   \\:\\ \\:\\__\\    \\:\\  \\    \\:\\  \\        \\:\\  /:/  /        /:/  /   \\:\\ \\:\\__\\              /:/  /       \\:\\  /:/  / ";
-		std::cout << "\n   \\:\\/:/  /     \\:\\ \\/__/     \\:\\  \\    \\:\\  \\        \\:\\/:/  /        /:/  /     \\:\\ \\/__/              \\/__/         \\:\\/:/  /  ";
-		std::cout << "\n    \\::/  /       \\:\\__\\        \\:\\__\\    \\:\\__\\        \\::/  /        /:/  /       \\:\\__\\                               \\::/  /   ";
-		std::cout << "\n     \\/__/         \\/__/         \\/__/     \\/__/         \\/__/         \\/__/         \\/__/                                \\/__/    ";
+		switch (in1)
+		{
+		case 0:
+			in1 = '0';
+			break;
+		default:
+			in1 = '0';
+			break;
 		}
-	for (int v = 0; v < 35; v++) {
-		
-		system("cls");
-		std::cout << "\n      ___           ___           ___       ___           ___           ___           ___                    ___           ___     ";
-		std::cout << "\n     /\\__\\         /\\  \\         /\\__\\     /\\  \\         /\\  \\         /\\__\\         /\\  \\                  /\\  \\         /\\  \\    ";
-		std::cout << "\n    /:/ _/_       /::\\  \\       /:/  /    /::\\  \\       /::\\  \\       /::|  |       /::\\  \\                 \\:\\  \\       /::\\  \\   ";
-		std::cout << "\n   /:/ /\\__\\     /:/\\:\\  \\     /:/  /    /:/\\:\\  \\     /:/\\:\\  \\     /:|:|  |      /:/\\:\\  \\                 \\:\\  \\     /:/\\:\\  \\  ";
-		std::cout << "\n  /:/ /:/ _/_   /::\\~\\:\\  \\   /:/  /    /:/  \\:\\  \\   /:/  \\:\\  \\   /:/|:|__|__   /::\\~\\:\\  \\                /::\\  \\   /:/  \\:\\  \\ ";
-		std::cout << "\n /:/_/:/ /\\__\\ /:/\\:\\ \\:\\__\\ /:/__/    /:/__/ \\:\\__\\ /:/__/ \\:\\__\\ /:/ |::::\\__\\ /:/\\:\\ \\:\\__\\              /:/\\:\\__\\ /:/__/ \\:\\__\\";
-		std::cout << "\n \\:\\/:/ /:/  / \\:\\~\\:\\ \\/__/ \\:\\  \\    \\:\\  \\  \\/__/ \\:\\  \\ /:/  / \\/__/~~/:/  / \\:\\~\\:\\ \\/__/             /:/  \\/__/ \\:\\  \\ /:/  /";
-		std::cout << "\n  \\::/_/:/  /   \\:\\ \\:\\__\\    \\:\\  \\    \\:\\  \\        \\:\\  /:/  /        /:/  /   \\:\\ \\:\\__\\              /:/  /       \\:\\  /:/  / ";
-		std::cout << "\n   \\:\\/:/  /     \\:\\ \\/__/     \\:\\  \\    \\:\\  \\        \\:\\/:/  /        /:/  /     \\:\\ \\/__/              \\/__/         \\:\\/:/  /  ";
-		std::cout << "\n    \\::/  /       \\:\\__\\        \\:\\__\\    \\:\\__\\        \\::/  /        /:/  /       \\:\\__\\                               \\::/  /   ";
-		std::cout << "\n     \\/__/         \\/__/         \\/__/     \\/__/         \\/__/         \\/__/         \\/__/                                \\/__/    ";
-		std::cout << "\n      ___           ___           ___            ___         ___           ___           ___     ";
-		std::cout << "\n     /\\  \\         /\\  \\         /\\  \\          /\\  \\       /\\  \\         /\\  \\         /\\  \\    ";
-		std::cout << "\n    /::\\  \\       /::\\  \\       /::\\  \\         \\:\\  \\     /::\\  \\       /::\\  \\        \\:\\  \\   ";
-		std::cout << "\n   /:/\\:\\  \\     /:/\\:\\  \\     /:/\\:\\  \\    ___ /::\\__\\   /:/\\:\\  \\     /:/\\:\\  \\        \\:\\  \\  ";
-		std::cout << "\n  /::\\~\\:\\  \\   /::\\~\\:\\  \\   /:/  \\:\\  \\  /\\  /:/\\/__/  /::\\~\\:\\  \\   /:/  \\:\\  \\       /::\\  \\ ";
-		std::cout << "\n /:/\\:\\ \\:\\__\\ /:/\\:\\ \\:\\__\\ /:/__/ \\:\\__\\ \\:\\/:/  /    /:/\\:\\ \\:\\__\\ /:/__/ \\:\\__\\     /:/\\:\\__\\";
-		std::cout << "\n \\/__\\:\\/:/  / \\/_|::\\/:/  / \\:\\  \\ /:/  /  \\::/  /     \\:\\~\\:\\ \\/__/ \\:\\  \\  \\/__/    /:/  \\/__/";
-		std::cout << "\n      \\::/  /     |:|::/  /   \\:\\  /:/  /    \\/__/       \\:\\ \\:\\__\\    \\:\\  \\         /:/  /     ";
-		std::cout << "\n       \\/__/      |:|\\/__/     \\:\\/:/  /                  \\:\\ \\/__/     \\:\\  \\        \\/__/      ";
-		std::cout << "\n                  |:|  |        \\::/  /                    \\:\\__\\        \\:\\__\\                  ";
-		std::cout << "\n                   \\|__|         \\/__/                      \\/__/         \\/__/             ";
-	}
-	while (select != true) {
-		system("cls");
-		for (int i = 0; i < 50; i++) {
-			system("cls");
-			display_gamelogo();
+
+		switch (in2)
+		{
+		case 0:
+			in2 = '9';
+			break;
+		case 1:
+			in2 = 'a';
+			break;
+		case 2:
+			in2 = 'b';
+			break;
+		case 3:
+			in2 = 'c';
+			break;
+		case 4:
+			in2 = 'd';
+			break;
+		case 5:
+			in2 = 'e';
+			break;
+		case 6:
+			in2 = 'f';
+			break;
+		default:
+			in2 = 'b';
+			break;
 		}
-		std::cout << "\n\nPlease type anything to continue...";
-		if (_kbhit) {
-			switch (_getch())
-			{
-			default:
-				select = true;
-				break;
-			}
-		}
-	}
+		color1 = in1;
+		color2 = in2;
+		output = output += color1;
+		output = output += color2;
+		system(output.c_str());
+	
+
+	
+	system("cls");
+	
+
 }
 
 void battle(bool &infight, bool& gameOver, Enemy &i, Player &q) { //The menu system here uses math to move around 
@@ -247,6 +242,7 @@ bool menu(bool &gameOver) {
 			case 's':
 				if (option < 4) {
 					option++;
+
 				}
 				else if (option == 4) {
 					option = option - 4;
@@ -268,6 +264,7 @@ bool menu(bool &gameOver) {
 			}
 		}
 	}
+
 	switch (option)
 	{
 	case 0:
@@ -284,6 +281,7 @@ bool menu(bool &gameOver) {
 	case 3:
 		//Extras
 		menu_extra(gameOver);
+		break;
 	case 4:
 		//Quit game
 		return gameOver = true;
@@ -356,7 +354,7 @@ void menu_settings(bool& gameOver) {
 			menu_controls(gameOver);
 			break;
 		case 1:
-			menu_color();
+			menu_color(gameOver);
 			break;
 		case 2:
 			menu(gameOver);
@@ -368,7 +366,7 @@ void menu_settings(bool& gameOver) {
 
 }
 
-void menu_color() {
+void menu_color(bool& gameOver) {
 	int repeat = 1;
 	char yn;
 	while (repeat == 1) {
@@ -393,6 +391,7 @@ void menu_color() {
 			repeat = 0;
 		
 	}
+	menu_settings(gameOver);
 }
 
 void menu_about(bool& gameOver) {
@@ -583,7 +582,9 @@ while (select == false) {
 }
 
 void menu_extra(bool& gameOver) {
+		int i = rand() % 8999 + 1000;
 		int option = 0;
+		gameOver = false;
 		bool select = false;
 		std::string arrow = "<---";
 		while (select == false) {
@@ -603,8 +604,11 @@ void menu_extra(bool& gameOver) {
 			std::cout << "\nINSTANT SEIZURE ";
 			if (option == 1)
 				std::cout << arrow;
-			std::cout << "\nGo Back ";
+			std::cout << "\nRandom  4-digit passcode ";
 			if (option == 2)
+				std::cout << arrow;
+			std::cout << "\nGo Back ";
+			if (option == 3)
 				std::cout << arrow;
 			std::cout << "\n\n--<>--<>--<>--<>";
 
@@ -613,11 +617,11 @@ void menu_extra(bool& gameOver) {
 				switch (_getch())
 				{
 				case 's':
-					if (option < 2) {
+					if (option < 3) {
 						option++;
 					}
-					else if (option == 2) {
-						option = option - 2;
+					else if (option == 3) {
+						option = option - 3;
 					}
 					break;
 				case 'w':
@@ -625,7 +629,7 @@ void menu_extra(bool& gameOver) {
 						option--;
 					}
 					else if (option == 0) {
-						option = option + 2;
+						option = option + 3;
 					}
 					break;
 				case 'f':
@@ -634,17 +638,30 @@ void menu_extra(bool& gameOver) {
 				default:
 					break;
 				}
-				 
+
 			}
 		}
-		if (option == 0 && select == true)
-			ringspin_looped();
-		else if (option == 1 && select == true) {
-			menu_seizure(gameOver);
-		}
-		else if (option == 2 && select == true) {
-			bool i = false;
-			menu(i);
+
+		if (select == true) {
+			switch (option)
+			{
+			case 0:
+				ringspin_looped();
+				menu_extra(gameOver);
+				break;
+			case 1:
+				menu_seizure(gameOver);
+				break;
+			case 2:
+				passcode(i);
+				menu_extra(gameOver);
+				break;
+			case 3:
+				menu(gameOver);
+				break;
+			default:
+				break;
+			}
 		}
 }
 
@@ -828,7 +845,7 @@ void hunger() {
 
 void passcode(int passcode) {
 	
-
+	std::vector<int> failed_attempts;
 	int useless = 1;
 	int i = 0; //Purpose of this int is to clear numpad of the #Numhere# pound keys. 
 	std::vector<char> hit = {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
@@ -848,11 +865,14 @@ void passcode(int passcode) {
 	 	max = max + 9*bases[i];
 	}	
 		
-	int attempts = 0;
+	int attempts = 1;
 	while (passcode != answer) {
+		if (attempts == digits+1) {
+			failed_attempts.push_back(answer);
+		}
 		//This Numpad is the one drawn most of the time
 		system("cls");
-		std::cout << "Digits: " << digits << " Answer: " << answer << " Attempts: " << attempts << " Num: " << test << " Max: " << max;
+		std::cout << "Digits: " << digits << " Answer: " << answer << " Attempts: " << attempts << " Num: " << test << " Max: " << max << " Passcode: " << passcode;
 		for (int i = 0; i < digits; i++) {
 			std::cout << " Base[" << i << "] = " << bases[i];
 		}
@@ -866,6 +886,10 @@ void passcode(int passcode) {
 		std::cout << "\n |     |     |     |";
 		std::cout << "\n | " << hit[6] << "7" << hit[6] << " | " << hit[7] << "8" << hit[7] << " | " << hit[8] << "9" << hit[8] << " |";
 		std::cout << "\n |_____|_____|_____|";
+		std::cout << "\nINCORRECT PASSCODES: ";
+		for (int i = 0; i < failed_attempts.size(); i++) {
+			std::cout << failed_attempts[i] << " ";
+		}
 		hit[i] = ' ';
 		system("cls");
 		
@@ -876,7 +900,7 @@ void passcode(int passcode) {
 		}
 
 		//This Numpad is drawn only when the player inputs a number and will then draw the single frame of the visual effect
-		std::cout << "Digits: " << digits << " Answer: " << answer << " Attempts: " << attempts << " Num: " << test << " Max: " << max;
+		std::cout << "Digits: " << digits << " Answer: " << answer << " Attempts: " << attempts << " Num: " << test << " Max: " << max << " Passcode: " << passcode;
 		for (int i = 0; i < digits; i++) {
 			std::cout << " Base[" << i << "] = " << bases[i];
 		}
@@ -890,6 +914,12 @@ void passcode(int passcode) {
 		std::cout << "\n |     |     |     |";
 		std::cout << "\n | " << hit[6] << "7" << hit[6] << " | " << hit[7] << "8" << hit[7] << " | " << hit[8] << "9" << hit[8] << " |";
 		std::cout << "\n |_____|_____|_____|";
+		std::cout << "\nINCORRECT PASSCODES: ";
+		for (int i = 0; i < failed_attempts.size(); i++) {
+			std::cout << failed_attempts[i] << " ";
+		}
+		
+
 
 		if (_kbhit) {
 			switch (_getch())
@@ -941,7 +971,7 @@ void passcode(int passcode) {
 				break;
 			case 'f':
 				answer = 0000;
-				test = 4;
+				test = digits;
 			default:
 				break;
 			}
@@ -951,13 +981,12 @@ void passcode(int passcode) {
 		if (test < 0) {
 			test = test + digits;
 		}
-
 		else if (std::to_string(answer).length() == 0) {
-			test = 3;
-			answer = NULL;
+			test = digits-1;
+			answer = 0;
 		}
-		else if (attempts >= 5) {
-			test = 3;
+		else if (attempts >= digits+1) {
+			test = digits-1;
 			answer = 0;
 			attempts = 1;
 		}

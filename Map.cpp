@@ -151,7 +151,7 @@ void Map::draw_map(int& x, int& y, bool &gameOver, Enemy& a, Player& q) { //80,2
 	
 }
 
-void Map::fill_randmap(int enemy_quantity) {
+std::vector<Enemy> Map::fill_randmap(int enemy_quantity) {
 	
 	int num = enemy_quantity;
 	std::vector<Enemy> h(num); 
@@ -160,18 +160,42 @@ void Map::fill_randmap(int enemy_quantity) {
 		h[i].give_enemycoords(rand() % mapWIDTH, rand() % mapHEIGHT);
 		std::cout << "\ncreating: " << h[i].get_enem_name() << "'s X: " << h[i].get_enemy_x_coord() << " Y: " << h[i].get_enemy_y_coord() << "\n";
 	}
+
+	return h;
 }
 
-void Map::draw_randmap(int& x, int& y, Player& q, int enemy_quantity) {
+void Map::draw_randmap(int& x, int& y, Player& q, int enemy_quantity, std::vector<Enemy> enemies) {
 	int const WIDTH = mapWIDTH; //map x
 	int const HEIGHT = mapHEIGHT; //map y
 
-
-
-
 	bool infight = false;
 
-	if (x > WIDTH - 2) { //This chain of if and for statements is to keep the player from going outside the map
+	// This draws the map, player, and enemyy. i for height(x), j for WIDTH(y)
+	std::cout << "X: " << x << " Y: " << y << "\n";
+	
+	for (int i = 0; i < HEIGHT; i++) { 
+		for (int j = 0; j < WIDTH; j++) {
+			if (i == 0 || j == 0 || i == HEIGHT - 1 || j == WIDTH - 1) {
+				std::cout << "#";
+			}
+			else if (x == j && y == i) {
+				std::cout << "O";
+			}
+			int e = 0;
+			for (int e = 0; e < enemy_quantity; e++) {
+				if (enemies[e].get_enemy_x_coord() == j && enemies[e].get_enemy_y_coord() == i) {
+				std::cout << "E";
+				}
+			}
+			if  (i != 0 || j != 0 || i != HEIGHT - 1 || j != WIDTH - 1 && x != j && y != i && enemies[e].get_enemy_x_coord() != j && enemies[e].get_enemy_y_coord() != i) { //atempts to draw each enemy
+				std::cout << " ";
+			}
+		}
+		std::cout << "\n";
+	}
+	
+	//This chain of if and for statements is to keep the player from going outside the map
+	if (x > WIDTH - 2) { 
 		for (int i = 0; x > WIDTH - 2; i++) {
 			x--;
 		}
@@ -190,23 +214,6 @@ void Map::draw_randmap(int& x, int& y, Player& q, int enemy_quantity) {
 		for (int i = 0; y < 1; i++) {
 			y++;
 		}
-	}
-
-	std::cout << "X: " << x << " Y: " << y << "\n";
-	for (int i = 0; i < HEIGHT; i++) { // This draws the map, player, and enemyy. i for height(x), j for WIDTH(y)
-		for (int j = 0; j < WIDTH; j++) {
-			if (i == 0 || j == 0 || i == HEIGHT - 1 || j == WIDTH - 1) {
-				std::cout << "#";
-			}
-			else if (x == j && y == i) {
-				std::cout << "O";
-			}
-			else {
-				std::cout << " ";
-			}
-		}
-		std::cout << "\n";
-
 	}
 }
 

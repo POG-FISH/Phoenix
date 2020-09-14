@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 
 class Player {
 private:
@@ -22,7 +23,39 @@ public:
 
 };
 
+class Armor
+{
+public:
+	Armor();
+	~Armor();
 
+private:
+
+};
+
+class Weapons
+{
+public:
+	Weapons();
+	~Weapons();
+
+private:
+
+};
+
+class Item
+{
+private:
+
+	std::string item_name;
+	int item_quantity, item_level, item_rarity;
+
+
+public:
+	Item();
+	~Item();
+
+};
 
 class Ally {
 private:
@@ -62,19 +95,6 @@ public:
 
 
 
-class Item
-{
-private:
-
-	std::string item_name;
-	int item_quantity, item_level, item_rarity;
-
-
-public:
-	Item();
-	~Item();
-
-};
 
 
 
@@ -88,30 +108,32 @@ public:
 
 	void create_map(int new_WIDTH, int new_HEIGHT);
 	void draw_map(int& x, int& y, bool &gameOver, Enemy& a, Player& q);
-	void fill_randmap(int enemy_quantity);
-	void draw_randmap(int& x, int& y, Player& q, int enemy_quantity);
+	std::vector<Enemy> fill_randmap(int enemy_quantity);
+	void draw_randmap(int& x, int& y, Player& q, int enemy_quantity, std::vector<Enemy> enemies);
 	void map_bounds(); //useless, code is already in draw_map
 	void map_controls(int& x, int& y, bool& gameOver);
 
 };
 
 
-
 void battle(bool &infight, bool& gameOver, Enemy &i, Player &q);
+void randcolor();
 
+//All different Menus
 bool menu(bool &gameOver);
 	void menu_settings(bool& gameOver);
-	void menu_color();
+	void menu_color(bool& gameOver);
 	void menu_about(bool& gameOver);
 	void menu_controls(bool& gameOver);
 	void menu_extra(bool& gameOver);
 	void menu_seizure(bool& gameOver);
 bool menu_paused(bool &gameOver);
 
-//Displays
+
+
+// Displays/Animations
 void health_display(Player player);
 void display_inventory(bool& gameOver);
-
 void display_gamelogo();
 void display_monster1();
 void display_monster2();
@@ -122,16 +144,14 @@ void display_monster6();
 void display_monster7();
 void display_npc1();
 void display_npc2();
+	void entrance(); //Intro when getting into game
+	void bigload();
+	void ringspin_looped();
+	void ringspin_looped2(int &i);
+	void diamond_looped();
 
-void bigload();
-void ringspin_looped();
-void ringspin_looped2(int &i);
-void diamond_looped();
-
+//Minigames
 void passcode(int passcode);
-
-//ENTER THE GAME
-void entrance();
 
 //Empty
 void hacking_game();

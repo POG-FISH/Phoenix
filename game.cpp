@@ -4,14 +4,17 @@
 #include <conio.h>
 #include <Windows.h>
 
+
+
 int main() {
 	srand(time(NULL)); //makes functions(especially randenemy constructor) truly random
-	//entrance();
+	randcolor();
+	entrance();
 
-	//passcode(1946);
 
 	bool quit = false;
 	bool gameOver = false;
+
 	menu(gameOver);
 
 	Player p1;
@@ -28,15 +31,17 @@ int main() {
 
 	map1.create_map(80, 30);
 
+	int r = 3;
 	randmap1.create_map(80, 30);
-	randmap1.fill_randmap(3);
+	
+
 
 
 	int choice;
 		std::cout << "\nmap(1) or randmap(else): ";
 		std::cin >> choice;
 		if (choice == 1) {
-			while (gameOver == false) { //set map
+			while (gameOver == false && quit == false) { //set map
 				system("cls");
 				map1.draw_map(x, y, gameOver, rand_devil, p1);
 				map1.map_controls(x, y, gameOver);
@@ -44,9 +49,11 @@ int main() {
 			}
 		}
 		else { //random map
-			while (gameOver == false) {
+			int enemy_quantity = 3;
+			std::vector<Enemy> enemies = randmap1.fill_randmap(enemy_quantity);
+			while (gameOver == false && quit == false) {
 				system("cls");
-				randmap1.draw_randmap(x, y, p1, 3);
+				randmap1.draw_randmap(x, y, p1, enemy_quantity, enemies);
 				randmap1.map_controls(x, y, gameOver);
 				p1.give_playercoords(x, y);
 
@@ -58,13 +65,11 @@ int main() {
 
 
 /*
-PhoenixV0.350
+PhoenixV0.352
 
 changes:
-Added a option to color the screen
-Minor changes such as being able to spam down or up in the menu
-Made passcode() work.
-Added seizure
+Updated the passcode() to be more reliable
+Fixed bug with extra menu
 
 
 Should work on:
