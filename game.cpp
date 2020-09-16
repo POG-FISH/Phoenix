@@ -12,13 +12,13 @@ int main() {
 	entrance();
 
 
-	bool quit = false;
+	bool quit = false;		
 	bool gameOver = false;
 
 	menu(gameOver);
 
 	Player p1;
-	p1.make_player("Mark", 100, 20, 20);
+	p1.make_player("Mark", 200, 50, 50, 1);
 	p1.give_playercoords(30, 7);
 	int x = p1.get_player_x_coord();
 	int y = p1.get_player_y_coord();
@@ -65,11 +65,10 @@ int main() {
 
 
 /*
-PhoenixV0.352
+PhoenixV0.400
 
 changes:
-Updated the passcode() to be more reliable
-Fixed bug with extra menu
+Can now properly fight enimies with battle()
 
 
 Should work on:

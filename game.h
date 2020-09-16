@@ -5,17 +5,24 @@ class Player {
 private:
 
 	std::string pname;
-	int phealth, pstrength, pspeed, px, py;
+	int phealth, pstrength, pspeed, plook, px, py;
+	bool pAlive;
 
 
 public:
 
-	void make_player(std::string new_pname,int new_phealth, int new_pstrength, int new_pspeed);
+	void make_player(std::string new_pname,int new_phealth, int new_pstrength, int new_pspeed, int look);
 	void give_playercoords(int new_px, int new_py);
+	void give_playerlook(int look);
+	void display_player();
 	int get_player_x_coord();
 	int get_player_y_coord();
 	int get_player_health();
 	std::string get_player_name();
+	int get_player_strength();
+	int get_player_speed();
+	void give_player_alive(bool isAlive);
+	bool get_player_alive();
 	void give_player_health(int health);
 	void give_player_strength(int strength);
 	void give_player_speed(int speed);
@@ -48,7 +55,8 @@ class Item
 private:
 
 	std::string item_name;
-	int item_quantity, item_level, item_rarity;
+	int item_quantity, item_level, item_rarity; //rarities
+	int item_damage, item_speed, item_strength; //stats
 
 
 public:
@@ -76,15 +84,21 @@ private:
 
 	std::string eName;
 	int eHealth, eStrength, eSpeed, ex, ey, elook;
+	bool eAlive;
 
 public:
 
 	void new_enemy(std::string new_name, int new_eHealth, int new_eStrength, int new_eSpeed);
 	void give_enemycoords(int new_ex, int new_ey);
 	void give_enemylook(int look);
-	void display_enemy();
+	void give_enem_health(int new_health);
+	void give_enem_speed(int new_speed);
+	void give_enem_strength(int new_strength);
+	void give_enem_alive(bool isAlive);
+	bool get_enem_alive();
 	int get_enemy_x_coord();
 	int get_enemy_y_coord();
+	void display_enemy();
 	void new_randenemy(int min, int max);
 	void get_enem_info();
 	std::string get_enem_name();
@@ -92,10 +106,6 @@ public:
 	int get_enem_speed();
 	int get_enem_strength();
 };
-
-
-
-
 
 
 class Map
@@ -116,7 +126,10 @@ public:
 };
 
 
-void battle(bool &infight, bool& gameOver, Enemy &i, Player &q);
+bool battle(bool &infight, bool& gameOver, Enemy &i, Player &q);
+void dot();
+
+
 void randcolor();
 
 //All different Menus
@@ -144,6 +157,7 @@ void display_monster6();
 void display_monster7();
 void display_npc1();
 void display_npc2();
+void display_player_option1();
 	void entrance(); //Intro when getting into game
 	void bigload();
 	void ringspin_looped();
@@ -158,6 +172,5 @@ void hacking_game();
 void setup();
 void score();
 void end_game();
-void dot();
 void hunger();
 void chest();

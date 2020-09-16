@@ -19,7 +19,8 @@ void Map::draw_map(int& x, int& y, bool &gameOver, Enemy& a, Player& q) { //80,2
 	int ex = a.get_enemy_x_coord(), ey = a.get_enemy_y_coord();
 	bool infight = false;
 
-	if (x > WIDTH - 2) { //This chain of if and for statements is to keep the player from going outside the map
+	//This chain of if and for statements is to keep the player from going outside the map
+	if (x > WIDTH - 2) { 
 		for (int i = 0; x > WIDTH - 2; i++) {
 			x--;
 		}
@@ -40,7 +41,8 @@ void Map::draw_map(int& x, int& y, bool &gameOver, Enemy& a, Player& q) { //80,2
 		}
 	}
 
-	if (ex > WIDTH - 2) { //This chain of if and for statements is to keep the enemy from going outside the map
+	//This chain of if and for statements is to keep the enemy from going outside the map
+	if (ex > WIDTH - 2) { 
 		for (int i = 0; ex > WIDTH - 2; i++) {
 			ex--;
 		}
@@ -61,7 +63,8 @@ void Map::draw_map(int& x, int& y, bool &gameOver, Enemy& a, Player& q) { //80,2
 		}
 	}
 
-	for (int i = 0; i < HEIGHT; i++) { // This draws the map, player, and enemyy. i for height(x), j for WIDTH(y)
+	// This draws the map, player, and enemyy. i for height(x), j for WIDTH(y)
+	for (int i = 0; i < HEIGHT; i++) { 
 		for (int j = 0; j < WIDTH; j++) {
 			if (i == 0 || j == 0 || i == HEIGHT - 1 || j == WIDTH - 1) {
 				std::cout << "#";
@@ -70,9 +73,12 @@ void Map::draw_map(int& x, int& y, bool &gameOver, Enemy& a, Player& q) { //80,2
 				std::cout << "O";
 			}
 			else if (ex == j && ey == i) {
-				std::cout << "E";
+				if (a.get_enem_alive() == true)
+					std::cout << "E";
+				else
+					std::cout << "G";
 			}
-			else if (x == ex && y == ey || x - 1 == ex && y == ey || x + 1 == ex && y == ey || x == ex && y - 1 == ey || x == ex && y + 1 == ey) {
+			else if (x == ex && y == ey && a.get_enem_alive() == true || x - 1 == ex && y == ey && a.get_enem_alive() == true || x + 1 == ex && y == ey && a.get_enem_alive() == true || x == ex && y - 1 == ey && a.get_enem_alive() == true || x == ex && y + 1 == ey && a.get_enem_alive() == true) {
 				infight = true;
 			}
 			else {
@@ -83,14 +89,16 @@ void Map::draw_map(int& x, int& y, bool &gameOver, Enemy& a, Player& q) { //80,2
 
 	}
 	std::cout << "X: " << x << " Y: " << y;
+	std::cout << "\nE is for enemy, G is for ghost- a dead enemy.\n";
 
 	srand(time(NULL));
 	int turn = rand() % 2;
 	//int turn = 1;
 	std::cout << " Turn: " << turn;
 
+	//This moves the enemy closer to the player. But it is random and can sometimes just move is different directions.
 	if (turn == 1) {
-		if (x > ex && y > ey) { //This moves the enemy closer to the player. But it is random and can sometimes just move is different directions.
+		if (x > ex && y > ey) { 
 			ex++;
 			ey++;
 		}
@@ -144,7 +152,7 @@ void Map::draw_map(int& x, int& y, bool &gameOver, Enemy& a, Player& q) { //80,2
 			Map::draw_map(x, y, gameOver, a, q);
 		}
 		else if (infight == false && gameOver == true) {
-			std::cout << "\nGAME OVER!!";
+			std::cout << "\nGAME OVER DIPSHIT!!";
 		}
 
 	}
@@ -164,7 +172,7 @@ std::vector<Enemy> Map::fill_randmap(int enemy_quantity) {
 	return h;
 }
 
-void Map::draw_randmap(int& x, int& y, Player& q, int enemy_quantity, std::vector<Enemy> enemies) {
+void Map::draw_randmap(int& x, int& y, Player& q, int enemy_quantity, std::vector<Enemy> enemies) { //THIS FUNCTION NEEDS TO BE UPDATED. LAST FUNCTION WAS ABLE TO SUPPORT BATTLE FUNCTION PROPERLY
 	int const WIDTH = mapWIDTH; //map x
 	int const HEIGHT = mapHEIGHT; //map y
 
@@ -173,6 +181,7 @@ void Map::draw_randmap(int& x, int& y, Player& q, int enemy_quantity, std::vecto
 	// This draws the map, player, and enemyy. i for height(x), j for WIDTH(y)
 	std::cout << "X: " << x << " Y: " << y << "\n";
 	
+	int e = 0;
 	for (int i = 0; i < HEIGHT; i++) { 
 		for (int j = 0; j < WIDTH; j++) {
 			if (i == 0 || j == 0 || i == HEIGHT - 1 || j == WIDTH - 1) {
@@ -180,14 +189,13 @@ void Map::draw_randmap(int& x, int& y, Player& q, int enemy_quantity, std::vecto
 			}
 			else if (x == j && y == i) {
 				std::cout << "O";
-			}
-			int e = 0;
 			for (int e = 0; e < enemy_quantity; e++) {
 				if (enemies[e].get_enemy_x_coord() == j && enemies[e].get_enemy_y_coord() == i) {
 				std::cout << "E";
 				}
 			}
-			if  (i != 0 || j != 0 || i != HEIGHT - 1 || j != WIDTH - 1 && x != j && y != i && enemies[e].get_enemy_x_coord() != j && enemies[e].get_enemy_y_coord() != i) { //atempts to draw each enemy
+			}
+			else if  (i != 0 || j != 0 || i != HEIGHT - 1 || j != WIDTH - 1 && x != j && y != i && enemies[e].get_enemy_x_coord() != j && enemies[e].get_enemy_y_coord() != i) { //atempts to draw each enemy
 				std::cout << " ";
 			}
 		}

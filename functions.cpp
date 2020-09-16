@@ -69,7 +69,7 @@ void randcolor() {
 
 }
 
-void battle(bool &infight, bool& gameOver, Enemy &i, Player &q) { //The menu system here uses math to move around 
+bool battle(bool &infight, bool& gameOver, Enemy &e, Player &p) { //The menu system here uses math to move around 
 	int option = 0;
 	bool select = false;
 	std::string arrow = "<---";
@@ -78,9 +78,15 @@ void battle(bool &infight, bool& gameOver, Enemy &i, Player &q) { //The menu sys
 	while (infight == true) {
 		
 			system("cls");
-			i.display_enemy();
-			std::cout << "\n--<>--<>--<>--<>\n";
-			std::cout << "\nYou are fighting " << i.get_enem_name() << "\n";
+			
+			//Shows enemy
+			e.display_enemy();
+			std::cout << "\nYou are fighting " << e.get_enem_name() << "!\n";
+			std::cout << "\nENEMY STATS: ";
+			std::cout << "\nHealth: " << e.get_enem_health() << " Strength: " << e.get_enem_strength() << " Speed: " << e.get_enem_speed() << " ";
+
+			//Displays battle menu
+			std::cout << "\n\n--<>--<>--<>--<>--<>--<>--<>--<>\n";
 			std::cout << "\nAttack "; //option 0
 			if (option == 0)
 				std::cout << arrow;
@@ -93,27 +99,87 @@ void battle(bool &infight, bool& gameOver, Enemy &i, Player &q) { //The menu sys
 			std::cout << "  Retreat "; //option 3
 			if (option == 3)
 				std::cout << arrow;
-			std::cout << "\n\n--<>--<>--<>--<>";
+			//Shows player
+			std::cout << "\n\nHealth: " << p.get_player_health() << " Strength: " << p.get_player_strength() << " Speed: " << p.get_player_speed() << " ";
+			std::cout << "\n\n--<>--<>--<>--<>--<>--<>--<>--<>";
 
 
+			//Executes on what option you chose in the battle menu
+			int sleeptime = 4000; //Slows the game to show messges. Can change this number to anything you want
+			int edmg = 0;
+			int pdmg = 0;
 			if (option == 0 && select == true) { //Attack
-				std::cout << "\ntest";
-				select = false;
+				if (p.get_player_speed() > e.get_enem_speed()) {
+					
+					//Player attacks
+					edmg = e.get_enem_health() - p.get_player_strength();
+					e.give_enem_health(edmg);
+					std::cout << "\nI did " << p.get_player_strength() << " damage!";
+					
+					if (e.get_enem_health() <= 0) {
+						infight = false;
+					}
+					else {
+						//Enemy attacks
+						pdmg = p.get_player_health() - e.get_enem_strength();
+						p.give_player_health(pdmg);
+						std::cout << "\nBut I took " << e.get_enem_strength() << " damage!";
+					}
+						if (p.get_player_health() <= 0) {
+							infight = false;
+						}
+					
+					Sleep(sleeptime);
+					select = false;
+				}
+
+				else {
+
+					//Enemy attacks
+					pdmg = p.get_player_health() - e.get_enem_strength();
+					p.give_player_health(pdmg);
+					std::cout << "\nI took " << e.get_enem_strength() << " damage!";
+
+					if (p.get_player_health() <= 0) {
+						infight = false;
+					}
+					else {
+						//Player attacks
+						edmg = e.get_enem_health() - p.get_player_strength();
+						e.give_enem_health(edmg);
+						std::cout << "\nBut I did " << p.get_player_strength() << " damage!";
+					}
+						if (e.get_enem_health() <= 0) {
+							infight = false;
+						}
+
+					Sleep(sleeptime);
+					select = false;
+				}
 			}
+
 			else if (option == 1 && select == true) { //Magic
-				std::cout << "\ntest";
+				std::cout << "\nHow about some magic?";
+				Sleep(sleeptime);
 				select = false;
 			}
+
 			else if (option == 2 && select == true) { //Items
-				std::cout << "\ntest";
+				display_inventory(gameOver);
+				std::cout << "\Gotta check my items.";
+				Sleep(sleeptime);
 				select = false;
 			}
+
 			else if (option == 3 && select == true) { //Retreat
 				std::cout << "\nMust retreat!!!";
+				Sleep(sleeptime);
 				infight = false;
 			}
 
 
+
+			//Controls
 			if (_kbhit()) {
 				switch (_getch())
 				{
@@ -148,7 +214,26 @@ void battle(bool &infight, bool& gameOver, Enemy &i, Player &q) { //The menu sys
 
 		
 	}
-	std::cout << "\nEND OF BATTLE";
+
+	//Player loses
+	if (p.get_player_health() <= 0) {
+		std::cout << "\nYOU FUCKING LOST!!!!!! RETARD!!!!!!";
+		std::cout << "\nYou lost!";
+		p.give_player_alive(false);
+		return gameOver = true;
+	}
+
+	//Player wins
+	else if (p.get_player_health() > 0) {
+		std::cout << "\nEND OF BATTLE";
+		std::cout << "\nYou won!";
+		e.give_enem_alive(false);
+		return gameOver = false;
+	}
+}
+
+void dot() {
+
 }
 
 void health_display(Player player) {
@@ -207,7 +292,7 @@ bool menu(bool &gameOver) {
 	std::string arrow = "<---";
 	while (select == false) {
 		system("cls");
-		std::cout << "\n PhoenixV.320";
+		std::cout << "\n PhoenixV0.400";
 		std::cout << "\n I used ascii text generator for this logo. Specifically 'Small Isometric1'";
 		std::cout << "\n    ___       ___       ___       ___            ___       ___       ___       ___      ";
 		std::cout << "\n   /\\__\\     /\\  \\     /\\  \\     /\\__\\          /\\__\\     /\\  \\     /\\__\\     /\\__\\     ";
@@ -305,7 +390,7 @@ void menu_settings(bool& gameOver) {
 			std::cout << "\n \\:\\:\\/__/ \\:\\:\\/  /  /:/\\/__/  /:/\\/__/ \\::/\\/__/ \\/|::/  / \\:\\:\\/__/ \\:\\:\\/__/";
 			std::cout << "\n  \\::/  /   \\:\\/  /   \\/__/     \\/__/     \\:\\__\\     |:/  /   \\::/  /   \\::/  / ";
 			std::cout << "\n   \\/__/     \\/__/                         \\/__/     \\/__/     \\/__/     \\/__/";
-		std::cout << "\n--<>--<>--<>--<>";
+		std::cout << "\n\n--<>--<>--<>--<>";
 		std::cout << "\n\nWelcome to the settings section.\n";
 		std::cout << "\nControls ";
 		if (option == 0)
@@ -409,7 +494,7 @@ void menu_about(bool& gameOver) {
 					std::cout << "\n   /:/  /   \\::/  /   \\::/  /   \\::/  /   \\/__/   ";
 					std::cout << "\n   \\/__/     \\/__/     \\/__/     \\/__/            ";
 
-		std::cout << "\n--<>--<>--<>--<>--<>--<>--<>--<>--<>--<>--<>--<>--<>--<>--<>--<>--<>--<>--<>--<>--<>\n";
+		std::cout << "\n\n--<>--<>--<>--<>--<>--<>--<>--<>--<>--<>--<>--<>--<>--<>--<>--<>--<>--<>--<>--<>--<>\n";
 		std::cout << "\nWelcome to the about section!";
 		std::cout << "\n\nI started working on this game about 6 days ago(9-2-20 if my memory holds up).";
 		std::cout << "\nI don't really work at a consistant pace, its more so a couple hours here";
@@ -469,7 +554,7 @@ void menu_controls(bool& gameOver) {
 			std::cout << "\n \\:\\ \\/__/ \\:\\/:/  / \\/|::/  /  /:/\\/__/ \\;:::/  / \\:\\/:/  / \\:\\  \\    \\:\\:\\/__/";
 			std::cout << "\n  \\:\\__\\    \\::/  /    |:/  /   \\/__/     |:\\/__/   \\::/  /   \\:\\__\\    \\::/  / ";
 			std::cout << "\n   \\/__/     \\/__/     \\/__/               \\|__|     \\/__/     \\/__/     \\/__/";
-		std::cout << "\n--<>--<>--<>--<>--<>--<>--<>--<>\n";
+		std::cout << "\n\n--<>--<>--<>--<>--<>--<>--<>--<>\n";
 		std::cout << "\nWelcome to the controls section!";
 		std::cout << "\nThis feature is in development";
 		std::cout << "\n\nGo back ";
@@ -832,10 +917,6 @@ void end_game() {
 }
 
 void setup() {
-
-}
-
-void dot() {
 
 }
 

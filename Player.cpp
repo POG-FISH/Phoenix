@@ -5,11 +5,12 @@
 #include <cmath>
 #include <time.h>
 
-void Player::make_player(std::string new_pname, int new_phealth, int new_pstrength, int new_pspeed) {
+void Player::make_player(std::string new_pname, int new_phealth, int new_pstrength, int new_pspeed, int look) {
 	pname = new_pname;
 	phealth = new_phealth;
 	pstrength = new_pstrength;
 	pspeed = new_pspeed;
+	plook = look;
 }
 
 void Player::give_playercoords(int new_px, int new_py) {
@@ -36,6 +37,19 @@ std::string Player::get_player_name() {
 	return pname;
 }
 
+int Player::get_player_strength() {
+	return pstrength;
+}
+
+int Player::get_player_speed() {
+	return pspeed;
+}
+bool Player::get_player_alive() {
+	return pAlive;
+}
+void Player::give_player_alive(bool isAlive) {
+	pAlive = isAlive;
+}
 void Player::give_player_health(int health) {
 	phealth = health;
 }
@@ -44,4 +58,18 @@ void Player::give_player_strength(int strength) {
 }
 void Player::give_player_speed(int speed) {
 	pspeed = speed;
+}
+
+void Player::give_playerlook(int look) {
+	plook = look;
+}
+void Player::display_player() {
+	switch (plook)
+	{
+	case 1:
+		display_player_option1();
+		break;
+	default:
+		break;
+	}
 }

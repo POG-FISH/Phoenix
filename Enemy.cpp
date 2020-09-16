@@ -5,6 +5,27 @@
 #include <cmath>
 #include <time.h>
 
+void Enemy::give_enemycoords(int new_ex, int new_ey) {
+	ex = new_ex;
+	ey = new_ey;
+}
+
+void Enemy::give_enem_health(int new_health) {
+	eHealth = new_health;
+}
+
+void Enemy::give_enem_speed(int new_speed) {
+	eSpeed = new_speed;
+}
+void Enemy::give_enem_strength(int new_strength) {
+	eStrength = new_strength;
+}
+void Enemy::give_enem_alive(bool isAlive) {
+	eAlive = isAlive;
+}
+bool Enemy::get_enem_alive() {
+	return eAlive;
+}
 std::string Enemy::get_enem_name() {
 	return eName;
 }
@@ -18,10 +39,6 @@ int Enemy::get_enem_speed() {
 	return eSpeed;
 }
 
-void Enemy::give_enemycoords(int new_ex, int new_ey) {
-	ex = new_ex;
-	ey = new_ey;
-}
 
 int Enemy::get_enemy_x_coord() {
 	return ex;
@@ -60,6 +77,7 @@ void Enemy::new_randenemy(int min, int max) {
 	eHealth = rand() % max + min;
 	eStrength = rand() % max + min;
 	eSpeed = rand() % max + min;
+	eAlive = true;
 	//Adds the prefix modifer is the rng is good enough
 	if (p2 == 0 && p1 == 1) {
 		eHealth = eHealth - 20;
